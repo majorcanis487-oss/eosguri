@@ -5,23 +5,19 @@ const gato = document.getElementById("gato");
 
 const mensagem = document.getElementById("mensagem");
 const aviso = document.getElementById("aviso");
-const printMsg = document.getElementById("printMsg");
 
 let tamanho = 1;
 let fugas = 0;
-let printDetectado = false;
-
 
 const hora = new Date().getHours();
 
 if(hora >= 6 && hora < 18){
     mensagem.textContent =
-    "☀️ Um sorvete com você seria perfeito agora.";
+    "☀️ Tomar um sorvete com você seria tudo de bom.";
 }else{
     mensagem.textContent =
-    "🌙 Um date noturno com você seria perfeito.";
+    "🌙 Um filminho com você agora seria tudo de bom.";
 }
-
 
 setInterval(() => {
 
@@ -39,22 +35,20 @@ setInterval(() => {
 
 function fugir(){
 
-    if(printDetectado) return;
-
     fugas++;
 
-    tamanho += 0.1;
+    tamanho += 0.15;
 
     btnSim.style.transform =
     `scale(${tamanho})`;
 
     const largura =
     window.innerWidth -
-    btnNao.offsetWidth;
+    btnNao.offsetWidth - 20;
 
     const altura =
     window.innerHeight -
-    btnNao.offsetHeight;
+    btnNao.offsetHeight - 20;
 
     const x =
     Math.random() * largura;
@@ -71,57 +65,111 @@ function fugir(){
     btnNao.style.top =
     y + "px";
 
-    if(fugas === 3){
+    if(fugas === 1){
         aviso.textContent =
-        "🤨 Tem certeza?";
+        "😮 Opa... você realmente tentou apertar NÃO.";
     }
 
-    if(fugas === 6){
+ if(fugas === 3){
         aviso.textContent =
-        "😼 Você está insistindo bastante...";
+       "😔 Isso magoa um pouquinho...";
+   
+    }
+
+    if(fugas === 4){
+        aviso.textContent =
+       "💔 Meu pobre coração pixelado.";
+    }
+
+    if(fugas === 8){
+        aviso.textContent =
+        "😵 Acho que estamos perdendo o controle da situação.";
     }
 
     if(fugas === 10){
         aviso.textContent =
-        "😂 Ainda tentando?";
+        "😭 O gatinho está decepcionado.";
     }
 
     if(fugas === 15){
         aviso.textContent =
-        "💖 O botão SIM continua ali...";
+        "😅 Você é mais persistente do que eu imaginava.";
     }
 
-    if(fugas === 20){
+    if(fugas === 25){
         aviso.textContent =
-        "🏆 Nível máximo de teimosia desbloqueado.";
+        "🤨 Ainda procurando o NÃO?";
+    }
+
+    if(fugas === 35){
+        aviso.textContent =
+        "😂 O SIM já está ficando gigante.";
+    }
+
+    if(fugas === 45){
+        aviso.textContent =
+        "😵 Acho que estamos perdendo o controle da situação.";
+    }
+
+    if(fugas === 55){
+        aviso.textContent =
+        "🏳️ Tá bom, eu desisto...";
+    }
+
+    if(tamanho >= 4.5){
+
+        aviso.textContent =
+        "🫢 O botão NÃO foi esmagado pelo SIM.";
+
+        btnNao.style.display =
+        "none";
     }
 }
 
-btnNao.addEventListener("mouseover", fugir);
-btnNao.addEventListener("touchstart", fugir);
+btnNao.addEventListener(
+    "mouseenter",
+    fugir
+);
 
-btnSim.addEventListener("click", () => {
+btnNao.addEventListener(
+    "touchstart",
+    (e) => {
+        e.preventDefault();
+        fugir();
+    }
+);
 
-    aviso.textContent =
-    "🥰 Sabia que você escolheria essa opção.";
+btnNao.addEventListener(
+    "click",
+    () => {
 
-});
+        tamanho += 2;
 
-document.addEventListener("visibilitychange", () => {
-
-    if(document.hidden && !printDetectado){
-        printDetectado = true;
-        btnNao.style.display = "none";
-        printMsg.style.display =
-        "block";
-
-        printMsg.textContent =
-        "👀 O botão NÃO perdeu seus privilégios... agora só existe uma escolha.";
+        btnSim.style.transform =
+        `scale(${tamanho})`;
 
         aviso.textContent =
-        "😏 Parece que o destino decidiu por você.";
-    }
+        "😏 Boa tentativa... mas o SIM ficou enorme.";
 
-});
+        fugir();
+    }
+);
+
+btnSim.addEventListener(
+    "click",
+    () => {
+
+        aviso.textContent =
+        "🥰 Sabia que você escolheria essa opção.";
+
+        setTimeout(() => {
+
+            window.location.href =
+            "https://www.instagram.com/caleb_joorg/";
+
+        },1000);
+
+    }
+);
 
 console.log("❤️ Boa sorte ❤️");
