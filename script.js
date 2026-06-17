@@ -5,28 +5,23 @@ const gato = document.getElementById("gato");
 
 const mensagem = document.getElementById("mensagem");
 const aviso = document.getElementById("aviso");
-
 const printMsg = document.getElementById("printMsg");
 
 let tamanho = 1;
 let fugas = 0;
+let printDetectado = false;
 
-/* MENSAGEM DIA/NOITE */
 
 const hora = new Date().getHours();
 
 if(hora >= 6 && hora < 18){
-
     mensagem.textContent =
     "☀️ Um sorvete com você seria perfeito agora.";
-
 }else{
-
     mensagem.textContent =
     "🌙 Um date noturno com você seria perfeito.";
 }
 
-/* GATO PISCANDO */
 
 setInterval(() => {
 
@@ -42,19 +37,16 @@ setInterval(() => {
 
 },3000);
 
-/* BOTÃO NÃO FUGINDO */
-
 function fugir(){
+
+    if(printDetectado) return;
 
     fugas++;
 
-    tamanho += 0.15;
+    tamanho += 0.1;
 
     btnSim.style.transform =
     `scale(${tamanho})`;
-
-    btnSim.style.animation =
-    "piscar .3s 2";
 
     const largura =
     window.innerWidth -
@@ -71,7 +63,7 @@ function fugir(){
     Math.random() * altura;
 
     btnNao.style.position =
-    "absolute";
+    "fixed";
 
     btnNao.style.left =
     x + "px";
@@ -79,56 +71,57 @@ function fugir(){
     btnNao.style.top =
     y + "px";
 
-    if(fugas === 5){
-
+    if(fugas === 3){
         aviso.textContent =
-        "😼 Tá, você venceu... mas o SIM é mais bonito.";
+        "🤨 Tem certeza?";
+    }
+
+    if(fugas === 6){
+        aviso.textContent =
+        "😼 Você está insistindo bastante...";
+    }
+
+    if(fugas === 10){
+        aviso.textContent =
+        "😂 Ainda tentando?";
+    }
+
+    if(fugas === 15){
+        aviso.textContent =
+        "💖 O botão SIM continua ali...";
+    }
+
+    if(fugas === 20){
+        aviso.textContent =
+        "🏆 Nível máximo de teimosia desbloqueado.";
     }
 }
 
-btnNao.addEventListener(
-    "mouseenter",
-    fugir
-);
+btnNao.addEventListener("mouseover", fugir);
+btnNao.addEventListener("touchstart", fugir);
 
-/* BOTÃO SIM */
+btnSim.addEventListener("click", () => {
 
-btnSim.addEventListener(
-    "click",
-    () => {
+    aviso.textContent =
+    "🥰 Sabia que você escolheria essa opção.";
 
-        window.location.href =
-        "https://www.instagram.com/caleb_joorg/";
+});
 
+document.addEventListener("visibilitychange", () => {
+
+    if(document.hidden && !printDetectado){
+        printDetectado = true;
+        btnNao.style.display = "none";
+        printMsg.style.display =
+        "block";
+
+        printMsg.textContent =
+        "👀 O botão NÃO perdeu seus privilégios... agora só existe uma escolha.";
+
+        aviso.textContent =
+        "😏 Parece que o destino decidiu por você.";
     }
-);
 
-/* BRINCADEIRA DO PRINT */
+});
 
-document.addEventListener(
-    "visibilitychange",
-    () => {
-
-        if(document.hidden){
-
-            printMsg.style.display =
-            "block";
-
-            printMsg.textContent =
-            "📸 Hmmm... parece que alguém gostou e foi tirar print 😏";
-        }
-    }
-);
-
-/* CONSOLE */
-
-console.log(`
-╔══════════════════════════════╗
-║      Oi Maria Luisa ❤️       ║
-║                              ║
-║  Se abriu o console, já      ║
-║  está curiosa 😏             ║
-║                              ║
-║      Clique no SIM 💖        ║
-╚══════════════════════════════╝
-`);
+console.log("❤️ Boa sorte ❤️");
