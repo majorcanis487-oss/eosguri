@@ -28,6 +28,7 @@ body{
 
 .janela{
     width:420px;
+    max-width:95%;
     background:#f6d1d1;
     border:4px solid black;
     box-shadow:8px 8px 0 black;
@@ -73,14 +74,15 @@ h2{
 .gato{
     font-size:80px;
     position:relative;
-    margin-bottom:30px;
+    margin-bottom:50px;
 }
 
 .coracao-gato{
     position:absolute;
     left:50%;
-    bottom:-10px;
+    bottom:-35px;
     transform:translateX(-50%);
+    font-size:24px;
 }
 
 .botoes{
@@ -129,6 +131,22 @@ button{
     z-index:9999;
 
     font-size:10px;
+}
+
+@media(max-width:500px){
+
+    .barra{
+        font-size:8px;
+    }
+
+    h2{
+        font-size:12px;
+    }
+
+    button{
+        padding:10px 14px;
+        font-size:10px;
+    }
 }
 
 @keyframes piscar{
